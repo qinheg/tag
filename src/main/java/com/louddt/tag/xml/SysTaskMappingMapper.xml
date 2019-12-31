@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.louddt.tag.mapper.SysTaskMappingMapper" >
+  <resultMap id="BaseResultMap" type="com.louddt.tag.entity.dbo.SysTaskMapping" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="db_type" property="dbType" jdbcType="VARCHAR" />
+    <result column="ip" property="ip" jdbcType="VARCHAR" />
+    <result column="port" property="port" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="database_name" property="databaseName" jdbcType="VARCHAR" />
+    <result column="table_name" property="tableName" jdbcType="VARCHAR" />
+    <result column="node_name" property="nodeName" jdbcType="VARCHAR" />
+    <result column="col_property_json" property="colPropertyJson" jdbcType="VARCHAR" />
+    <result column="task_id" property="taskId" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, db_type, ip, port, username, password, database_name, table_name, node_name, 
+    col_property_json, task_id, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tag_sys_task_mapping
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tag_sys_task_mapping
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.louddt.tag.entity.dbo.SysTaskMapping" >
+    insert into tag_sys_task_mapping (id, db_type, ip,
+      port, username, password, 
+      database_name, table_name, node_name, 
+      col_property_json, task_id, create_time
+      )
+    values (#{id,jdbcType=VARCHAR}, #{dbType,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, 
+      #{port,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{databaseName,jdbcType=VARCHAR}, #{tableName,jdbcType=VARCHAR}, #{nodeName,jdbcType=VARCHAR}, 
+      #{colPropertyJson,jdbcType=VARCHAR}, #{taskId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.louddt.tag.entity.dbo.SysTaskMapping" >
+    insert into tag_sys_task_mapping
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="dbType != null" >
+        db_type,
+      </if>
+      <if test="ip != null" >
+        ip,
+      </if>
+      <if test="port != null" >
+        port,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="databaseName != null" >
+        database_name,
+      </if>
+      <if test="tableName != null" >
+        table_name,
+      </if>
+      <if test="nodeName != null" >
+        node_name,
+      </if>
+      <if test="colPropertyJson != null" >
+        col_property_json,
+      </if>
+      <if test="taskId != null" >
+        task_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="dbType != null" >
+        #{dbType,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="port != null" >
+        #{port,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="databaseName != null" >
+        #{databaseName,jdbcType=VARCHAR},
+      </if>
+      <if test="tableName != null" >
+        #{tableName,jdbcType=VARCHAR},
+      </if>
+      <if test="nodeName != null" >
+        #{nodeName,jdbcType=VARCHAR},
+      </if>
+      <if test="colPropertyJson != null" >
+        #{colPropertyJson,jdbcType=VARCHAR},
+      </if>
+      <if test="taskId != null" >
+        #{taskId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.louddt.tag.entity.dbo.SysTaskMapping" >
+    update tag_sys_task_mapping
+    <set >
+      <if test="dbType != null" >
+        db_type = #{dbType,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="port != null" >
+        port = #{port,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="databaseName != null" >
+        database_name = #{databaseName,jdbcType=VARCHAR},
+      </if>
+      <if test="tableName != null" >
+        table_name = #{tableName,jdbcType=VARCHAR},
+      </if>
+      <if test="nodeName != null" >
+        node_name = #{nodeName,jdbcType=VARCHAR},
+      </if>
+      <if test="colPropertyJson != null" >
+        col_property_json = #{colPropertyJson,jdbcType=VARCHAR},
+      </if>
+      <if test="taskId != null" >
+        task_id = #{taskId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.louddt.tag.entity.dbo.SysTaskMapping" >
+    update tag_sys_task_mapping
+    set db_type = #{dbType,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      port = #{port,jdbcType=INTEGER},
+      username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      database_name = #{databaseName,jdbcType=VARCHAR},
+      table_name = #{tableName,jdbcType=VARCHAR},
+      node_name = #{nodeName,jdbcType=VARCHAR},
+      col_property_json = #{colPropertyJson,jdbcType=VARCHAR},
+      task_id = #{taskId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <resultMap id="TaskDBMappingMap" type="com.louddt.tag.entity.vo.task.TaskDbMappingVo">
+    <result column="db_type" property="dbType" jdbcType="VARCHAR" />
+    <result column="ip" property="ip" jdbcType="VARCHAR" />
+    <result column="port" property="port" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="database_name" property="databaseName" jdbcType="VARCHAR" />
+    <result column="table_name" property="tableName" jdbcType="VARCHAR" />
+    <result column="node_name" property="nodeName" jdbcType="VARCHAR" />
+    <result column="col_property_json" property="colPropertyJson" jdbcType="VARCHAR" />
+    <result column="task_id" property="taskId" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="queryTaskDBMapping" resultMap="TaskDBMappingMap">
+    select db_type, ip, port, username, password, database_name, table_name, node_name,
+           col_property_json, task_id
+    from tag_sys_task_mapping
+    where task_id = #{taskId,jdbcType=VARCHAR}
+    <if test="nodeName != null">
+      and node_name = #{nodeName,jdbcType=VARCHAR}
+    </if>
+    limit 1
+  </select>
+
+  <delete id="deleteMappingByTaskId" parameterType="java.lang.String" >
+    delete from tag_sys_task_mapping
+    where task_id = #{taskId,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into tag_sys_task_mapping (id, db_type, ip,
+      port, username, password,
+      database_name, table_name, node_name,
+      col_property_json, task_id, create_time
+      )
+    values <foreach collection="list" item="item" index="index" separator=",">
+     (#{item.id,jdbcType=VARCHAR}, #{item.dbType,jdbcType=VARCHAR}, #{item.ip,jdbcType=VARCHAR},
+      #{item.port,jdbcType=INTEGER}, #{item.username,jdbcType=VARCHAR}, #{item.password,jdbcType=VARCHAR},
+      #{item.databaseName,jdbcType=VARCHAR}, #{item.tableName,jdbcType=VARCHAR}, #{item.nodeName,jdbcType=VARCHAR},
+      #{item.colPropertyJson,jdbcType=VARCHAR}, #{item.taskId,jdbcType=VARCHAR}, #{item.createTime,jdbcType=TIMESTAMP}
+      )
+    </foreach>
+  </insert>
+  
+  <select id="queryTaskDBNodeMapping" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tag_sys_task_mapping
+    where task_id = #{taskId,jdbcType=VARCHAR}
+    and node_name = #{nodeName,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="queryTaskDBClassify" resultMap="TaskDBMappingMap" parameterType="java.lang.String">
+    select db_type, ip, port, username, password, database_name, table_name, node_name,
+           col_property_json, task_id
+    from tag_sys_task_mapping
+    where task_id = #{taskId,jdbcType=VARCHAR}
+  </select>
+</mapper>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.louddt.tag.mapper.SysModelRelationMapper" >
+  <resultMap id="BaseResultMap" type="com.louddt.tag.entity.dbo.SysModelRelation" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="start_node_name" property="startNodeName" jdbcType="VARCHAR" />
+    <result column="end_node_name" property="endNodeName" jdbcType="VARCHAR" />
+    <result column="model_id" property="modelId" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, start_node_name, end_node_name, model_id, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tag_sys_model_relation
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tag_sys_model_relation
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.louddt.tag.entity.dbo.SysModelRelation" >
+    insert into tag_sys_model_relation (id, name, start_node_name,
+      end_node_name, model_id, create_time
+      )
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{startNodeName,jdbcType=VARCHAR}, 
+      #{endNodeName,jdbcType=VARCHAR}, #{modelId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.louddt.tag.entity.dbo.SysModelRelation" >
+    insert into tag_sys_model_relation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="startNodeName != null" >
+        start_node_name,
+      </if>
+      <if test="endNodeName != null" >
+        end_node_name,
+      </if>
+      <if test="modelId != null" >
+        model_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="startNodeName != null" >
+        #{startNodeName,jdbcType=VARCHAR},
+      </if>
+      <if test="endNodeName != null" >
+        #{endNodeName,jdbcType=VARCHAR},
+      </if>
+      <if test="modelId != null" >
+        #{modelId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.louddt.tag.entity.dbo.SysModelRelation" >
+    update tag_sys_model_relation
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="startNodeName != null" >
+        start_node_name = #{startNodeName,jdbcType=VARCHAR},
+      </if>
+      <if test="endNodeName != null" >
+        end_node_name = #{endNodeName,jdbcType=VARCHAR},
+      </if>
+      <if test="modelId != null" >
+        model_id = #{modelId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.louddt.tag.entity.dbo.SysModelRelation" >
+    update tag_sys_model_relation
+    set name = #{name,jdbcType=VARCHAR},
+      start_node_name = #{startNodeName,jdbcType=VARCHAR},
+      end_node_name = #{endNodeName,jdbcType=VARCHAR},
+      model_id = #{modelId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into tag_sys_model_relation (id, name, start_node_name,
+      end_node_name, model_id, create_time)
+    values <foreach collection="list" item="item" index="index" separator=",">
+    (#{item.id,jdbcType=VARCHAR}, #{item.name,jdbcType=VARCHAR}, #{item.startNodeName,jdbcType=VARCHAR},
+     #{item.endNodeName,jdbcType=VARCHAR}, #{item.modelId,jdbcType=VARCHAR}, 
+     #{item.createTime,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+
+  <select id="queryModelRelationByModelId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from tag_sys_model_relation
+    where model_id = #{modelId,jdbcType=VARCHAR}
+  </select>
+</mapper>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.louddt.tag.mapper.SysTaskNodePropertyMapper" >
+  <resultMap id="BaseResultMap" type="com.louddt.tag.entity.dbo.SysTaskNodeProperty" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="value" property="value" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="entry_name" property="entryName" jdbcType="VARCHAR" />
+    <result column="task_id" property="taskId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, value, type, entry_name, task_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tag_sys_task_node_property
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tag_sys_task_node_property
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.louddt.tag.entity.dbo.SysTaskNodeProperty" >
+    insert into tag_sys_task_node_property (id, name, value,
+      type, entry_name, task_id
+      )
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{entryName,jdbcType=VARCHAR}, #{taskId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.louddt.tag.entity.dbo.SysTaskNodeProperty" >
+    insert into tag_sys_task_node_property
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="value != null" >
+        value,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="entryName != null" >
+        entry_name,
+      </if>
+      <if test="taskId != null" >
+        task_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null" >
+        #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="entryName != null" >
+        #{entryName,jdbcType=VARCHAR},
+      </if>
+      <if test="taskId != null" >
+        #{taskId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.louddt.tag.entity.dbo.SysTaskNodeProperty" >
+    update tag_sys_task_node_property
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null" >
+        value = #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="entryName != null" >
+        entry_name = #{entryName,jdbcType=VARCHAR},
+      </if>
+      <if test="taskId != null" >
+        task_id = #{taskId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.louddt.tag.entity.dbo.SysTaskNodeProperty" >
+    update tag_sys_task_node_property
+    set name = #{name,jdbcType=VARCHAR},
+      value = #{value,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      entry_name = #{entryName,jdbcType=VARCHAR},
+      task_id = #{taskId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <insert id="batchInsert" parameterType="java.util.List" >
+    insert into tag_sys_task_node_property (id, name, value,
+      type, entry_name, task_id
+      )
+    values <foreach collection="list" item="item" index="index" separator=",">
+     (#{item.id,jdbcType=VARCHAR}, #{item.name,jdbcType=VARCHAR}, #{item.value,jdbcType=VARCHAR},
+      #{item.type,jdbcType=VARCHAR}, #{item.entryName,jdbcType=VARCHAR}, #{item.taskId,jdbcType=VARCHAR}
+      )
+      </foreach>
+  </insert>
+
+  <delete id="deleteTaskNodePropertyByTaskId" parameterType="java.lang.String">
+    delete from tag_sys_task_node_property where task_id = #{taskId,jdbcType=VARCHAR}
+  </delete>
+
+  <resultMap id="NodePropertyMap" type="com.louddt.tag.entity.vo.task.TaskNodePropertyVo">
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="value" property="value" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="entry_name" property="entryName" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="queryTaskNodeProperties" resultMap="NodePropertyMap" parameterType="java.lang.String">
+     select name, value, type, entry_name
+     from tag_sys_task_node_property
+     where task_id = #{taskId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="queryTaskEntryProperties" resultType="java.lang.String" parameterType="com.louddt.tag.entity.vo.task.TaskDatasetMappingQuery">
+     select name
+     from tag_sys_task_node_property
+     where task_id = #{taskId,jdbcType=VARCHAR}
+     and entry_name = #{node,jdbcType=VARCHAR}
+  </select>
+</mapper>

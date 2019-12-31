@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.louddt.tag.mapper.SysFtpFileMapper" >
+  <resultMap id="BaseResultMap" type="com.louddt.tag.entity.dbo.SysFtpFile" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="size" property="size" jdbcType="VARCHAR" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
+    <result column="ext_type" property="extType" jdbcType="VARCHAR" />
+    <result column="file_type" property="fileType" jdbcType="VARCHAR" />
+    <result column="real_name" property="realName" jdbcType="VARCHAR" />
+    <result column="directory" property="directory" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.louddt.tag.entity.dbo.SysFtpFile" extends="BaseResultMap" >
+    <result column="contents" property="contents" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, size, path, ext_type, file_type, real_name, directory, create_time, create_user
+  </sql>
+  <sql id="Blob_Column_List" >
+    contents
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tag_sys_ftp_file
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tag_sys_ftp_file
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.louddt.tag.entity.dbo.SysFtpFile" >
+    insert into tag_sys_ftp_file (id, name, size, 
+      path, ext_type, file_type, 
+      real_name, directory, create_time, 
+      create_user, contents)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{size,jdbcType=VARCHAR}, 
+      #{path,jdbcType=VARCHAR}, #{extType,jdbcType=VARCHAR}, #{fileType,jdbcType=VARCHAR}, 
+      #{realName,jdbcType=VARCHAR}, #{directory,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createUser,jdbcType=VARCHAR}, #{contents,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.louddt.tag.entity.dbo.SysFtpFile" >
+    insert into tag_sys_ftp_file
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="size != null" >
+        size,
+      </if>
+      <if test="path != null" >
+        path,
+      </if>
+      <if test="extType != null" >
+        ext_type,
+      </if>
+      <if test="fileType != null" >
+        file_type,
+      </if>
+      <if test="realName != null" >
+        real_name,
+      </if>
+      <if test="directory != null" >
+        directory,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="contents != null" >
+        contents,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null" >
+        #{size,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null" >
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="extType != null" >
+        #{extType,jdbcType=VARCHAR},
+      </if>
+      <if test="fileType != null" >
+        #{fileType,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="directory != null" >
+        #{directory,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="contents != null" >
+        #{contents,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.louddt.tag.entity.dbo.SysFtpFile" >
+    update tag_sys_ftp_file
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null" >
+        size = #{size,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null" >
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="extType != null" >
+        ext_type = #{extType,jdbcType=VARCHAR},
+      </if>
+      <if test="fileType != null" >
+        file_type = #{fileType,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="directory != null" >
+        directory = #{directory,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="contents != null" >
+        contents = #{contents,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.louddt.tag.entity.dbo.SysFtpFile" >
+    update tag_sys_ftp_file
+    set name = #{name,jdbcType=VARCHAR},
+      size = #{size,jdbcType=VARCHAR},
+      path = #{path,jdbcType=VARCHAR},
+      ext_type = #{extType,jdbcType=VARCHAR},
+      file_type = #{fileType,jdbcType=VARCHAR},
+      real_name = #{realName,jdbcType=VARCHAR},
+      directory = #{directory,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      contents = #{contents,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.louddt.tag.entity.dbo.SysFtpFile" >
+    update tag_sys_ftp_file
+    set name = #{name,jdbcType=VARCHAR},
+      size = #{size,jdbcType=VARCHAR},
+      path = #{path,jdbcType=VARCHAR},
+      ext_type = #{extType,jdbcType=VARCHAR},
+      file_type = #{fileType,jdbcType=VARCHAR},
+      real_name = #{realName,jdbcType=VARCHAR},
+      directory = #{directory,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_user = #{createUser,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into tag_sys_ftp_file (id, name, size,
+      path, ext_type, file_type,
+      real_name, directory, create_time,
+    contents,create_user)
+    values <foreach collection="list" item="item" index="index" separator=",">
+     (#{item.id,jdbcType=VARCHAR}, #{item.name,jdbcType=VARCHAR}, #{item.size,jdbcType=VARCHAR},
+      #{item.path,jdbcType=VARCHAR}, #{item.extType,jdbcType=VARCHAR}, #{item.fileType,jdbcType=VARCHAR},
+      #{item.realName,jdbcType=VARCHAR}, #{item.directory,jdbcType=VARCHAR}, #{item.createTime,jdbcType=TIMESTAMP},
+      #{item.contents,jdbcType=LONGVARCHAR},#{item.createUser,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+</mapper>

@@ -1,0 +1,30 @@
+server:
+  servlet:
+    context-path: /tagapi
+spring:
+  profiles:
+    active: dev
+mybatis:
+  mapper-locations: classpath*:com/louddt/tag/xml/*Mapper.xml
+  type-aliases-package: com.louddt.tag.entity.dbo
+swagger:
+  api: "com.louddt.tag.controller"
+  title: "SpringBoot整合swagger2测试接口文档"
+  description: "SpringBoot整合swagger2测试接口文档接口文档，RESTful API 接口文档说明"
+  version: "1.0.0"
+  author: "louddt.com Developer Group"
+  gmt: "2019-08-06"
+okhttpclient:
+  short-connect-timeout: 120
+  short-read-timeout: 120
+  long-connect-timeout: 240
+  long-read-timeout: 240
+  max-idle-connections: 20
+  keep-alive-duration-ns: 10
+ftp:
+  ip: 192.168.100.123
+  port: 21
+  username: company_audit
+  password: 504FE6B4B483B909B8A3D493F67E8BF9170AEA49BEC51EF0A363DAB4390F45BE
+  path: /tag/upload
+  download: /data/tag/download

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.louddt.tag.mapper.SysTaskNodeMapper" >
+  <resultMap id="BaseResultMap" type="com.louddt.tag.entity.dbo.SysTaskNode" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="node_name" property="nodeName" jdbcType="VARCHAR" />
+    <result column="task_id" property="taskId" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, node_name, task_id, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tag_sys_task_node
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tag_sys_task_node
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.louddt.tag.entity.dbo.SysTaskNode" >
+    insert into tag_sys_task_node (id, node_name, task_id,
+      create_time)
+    values (#{id,jdbcType=VARCHAR}, #{nodeName,jdbcType=VARCHAR}, #{taskId,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.louddt.tag.entity.dbo.SysTaskNode" >
+    insert into tag_sys_task_node
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="nodeName != null" >
+        node_name,
+      </if>
+      <if test="taskId != null" >
+        task_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="nodeName != null" >
+        #{nodeName,jdbcType=VARCHAR},
+      </if>
+      <if test="taskId != null" >
+        #{taskId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.louddt.tag.entity.dbo.SysTaskNode" >
+    update tag_sys_task_node
+    <set >
+      <if test="nodeName != null" >
+        node_name = #{nodeName,jdbcType=VARCHAR},
+      </if>
+      <if test="taskId != null" >
+        task_id = #{taskId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.louddt.tag.entity.dbo.SysTaskNode" >
+    update tag_sys_task_node
+    set node_name = #{nodeName,jdbcType=VARCHAR},
+      task_id = #{taskId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into tag_sys_task_node (id, node_name, task_id,
+      create_time)
+    values <foreach collection="list" item="item" index="index" separator=",">
+     (#{item.id,jdbcType=VARCHAR}, #{item.nodeName,jdbcType=VARCHAR}, #{item.taskId,jdbcType=VARCHAR},
+      #{item.createTime,jdbcType=TIMESTAMP})
+           </foreach>
+  </insert>
+
+  <delete id="deleteTaskNodeByTaskId" parameterType="java.lang.String">
+    delete from tag_sys_task_node where task_id = #{taskId,jdbcType=VARCHAR}
+  </delete>
+
+  <select id="queryTaskNodes" resultType="java.lang.String" parameterType="java.lang.String">
+    select group_concat(distinct(node_name)) as nodes
+    from tag_sys_task_node
+    where task_id = #{taskId,jdbcType=VARCHAR}
+  </select>
+
+  <resultMap id="TaskEntryMap" type="com.louddt.tag.entity.vo.task.TaskEntryVo">
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="queryNodeEntries" resultMap="TaskEntryMap" parameterType="java.lang.String">
+    select node_name as name , 1 as type
+    from tag_sys_task_node
+    where task_id = #{taskId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="queryTaskNodeByQuery" resultMap="BaseResultMap" parameterType="com.louddt.tag.entity.vo.task.TaskDatasetMappingQuery">
+    select
+    <include refid="Base_Column_List" />
+    from tag_sys_task_node
+    where task_id = #{taskId,jdbcType=VARCHAR}
+    and node_name = #{node,jdbcType=VARCHAR}
+  </select>
+
+  <resultMap id="TxtNodeEntriesMap" type="com.louddt.tag.entity.vo.task.TaskEntry">
+    <result column="node_name" property="name" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="queryTxtNodeEntries" resultMap="TxtNodeEntriesMap" parameterType="java.lang.String">
+    select node_name
+    from tag_sys_task_node
+    where task_id = #{taskId,jdbcType=VARCHAR}
+    order by node_name
+  </select>
+
+  <resultMap id="ModeNodeEntriesMap" type="com.louddt.tag.entity.vo.task.TaskEntry">
+  <result column="node_name" property="name" jdbcType="VARCHAR" />
+  <collection property="properties" ofType="com.louddt.tag.entity.vo.task.TaskEntryProperty">
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="value" property="value" jdbcType="VARCHAR" />
+  </collection>
+</resultMap>
+  <select id="queryModeNodeEntries" resultMap="ModeNodeEntriesMap" parameterType="java.lang.String">
+    select n.node_name,p.name,p.value
+    from tag_sys_task_node n
+    left join tag_sys_task_node_property p on p.task_id = n.task_id and n.node_name = p.entry_name
+    where n.task_id = #{taskId,jdbcType=VARCHAR}
+    order by n.node_name
+  </select>
+
+</mapper>

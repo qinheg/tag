@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.louddt.tag.mapper.SysTaskFileMapper" >
+  <resultMap id="BaseResultMap" type="com.louddt.tag.entity.dbo.SysTaskFile" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="task_id" property="taskId" jdbcType="VARCHAR" />
+    <result column="file_id" property="fileId" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="kg_status" property="kgStatus" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.louddt.tag.entity.dbo.SysTaskFile" extends="BaseResultMap" >
+    <result column="data_json" property="dataJson" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, task_id, file_id, status, kg_status
+  </sql>
+  <sql id="Blob_Column_List" >
+    data_json
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tag_sys_task_file
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tag_sys_task_file
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.louddt.tag.entity.dbo.SysTaskFile" >
+    insert into tag_sys_task_file (id, task_id, file_id,
+      status, kg_status, data_json
+      )
+    values (#{id,jdbcType=VARCHAR}, #{taskId,jdbcType=VARCHAR}, #{fileId,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{kgStatus,jdbcType=INTEGER}, #{dataJson,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.louddt.tag.entity.dbo.SysTaskFile" >
+    insert into tag_sys_task_file
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="taskId != null" >
+        task_id,
+      </if>
+      <if test="fileId != null" >
+        file_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="kgStatus != null" >
+        kg_status,
+      </if>
+      <if test="dataJson != null" >
+        data_json,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="taskId != null" >
+        #{taskId,jdbcType=VARCHAR},
+      </if>
+      <if test="fileId != null" >
+        #{fileId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="kgStatus != null" >
+        #{kgStatus,jdbcType=INTEGER},
+      </if>
+      <if test="dataJson != null" >
+        #{dataJson,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.louddt.tag.entity.dbo.SysTaskFile" >
+    update tag_sys_task_file
+    <set >
+      <if test="taskId != null" >
+        task_id = #{taskId,jdbcType=VARCHAR},
+      </if>
+      <if test="fileId != null" >
+        file_id = #{fileId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="kgStatus != null" >
+        kg_status = #{kgStatus,jdbcType=INTEGER},
+      </if>
+      <if test="dataJson != null" >
+        data_json = #{dataJson,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.louddt.tag.entity.dbo.SysTaskFile" >
+    update tag_sys_task_file
+    set task_id = #{taskId,jdbcType=VARCHAR},
+      file_id = #{fileId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      kg_status = #{kgStatus,jdbcType=INTEGER},
+      data_json = #{dataJson,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.louddt.tag.entity.dbo.SysTaskFile" >
+    update tag_sys_task_file
+    set task_id = #{taskId,jdbcType=VARCHAR},
+      file_id = #{fileId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      kg_status = #{kgStatus,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into tag_sys_task_file (id,task_id, file_id,data_json,status,kg_status)
+    values <foreach collection="list" item="item" index="index" separator=",">
+      (#{item.id,jdbcType=VARCHAR},#{item.taskId,jdbcType=VARCHAR}, #{item.fileId,jdbcType=VARCHAR},
+       #{item.dataJson,jdbcType=LONGVARCHAR}, #{item.status,jdbcType=INTEGER},#{item.kgStatus,jdbcType=INTEGER})
+      </foreach>
+  </insert>
+
+  <delete id="deleteTaskFilesByTaskId" parameterType="java.lang.String">
+    delete from tag_sys_task_file where task_id = #{taskId,jdbcType=VARCHAR}
+  </delete>
+
+  <select id="queryTaskFileIds" resultType="java.lang.String" parameterType="java.lang.String">
+    select t.file_id
+    from tag_sys_task_file t
+    inner join tag_sys_ftp_file f on f.id = t.file_id
+    where t.task_id = #{taskId,jdbcType=VARCHAR}
+    order by f.real_name
+  </select>
+
+  <select id="queryDataJsonByTaskIdFileId" resultType="java.lang.String">
+        select data_json
+        from tag_sys_task_file
+        where task_id = #{taskId,jdbcType=VARCHAR}
+        and file_id = #{fileId,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deteleOneByTaskIdFileId" parameterType="com.louddt.tag.entity.dbo.SysTaskFile">
+    delete from tag_sys_task_file
+    where task_id = #{taskId,jdbcType=VARCHAR}
+    and file_id = #{fileId,jdbcType=VARCHAR}
+  </delete>
+
+  <resultMap id="TaskExportDataMap" type="com.louddt.tag.entity.vo.task.TaskExportDataVo">
+    <result column="file_name" property="fileName" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <select id="getTaskExportDataById" resultMap="TaskExportDataMap" parameterType="java.lang.String">
+    select ff.real_name file_name , tf.data_json content
+    from tag_sys_task_file tf
+    inner join tag_sys_ftp_file ff on ff.id = tf.file_id
+    where tf.id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByTaskIdFileId"  resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tag_sys_task_file
+    where task_id = #{taskId,jdbcType=VARCHAR}
+    and file_id = #{fileId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="queryNotFinishFile" resultType="java.lang.String" parameterType="java.lang.String">
+    select id
+    from tag_sys_task_file
+    where status != 2
+    and task_id = #{taskId,jdbcType=VARCHAR}
+  </select>
+
+  <resultMap id="TaskFileListMap" type="com.louddt.tag.entity.vo.task.TaskFileListVo">
+    <result column="id" property="id" jdbcType="VARCHAR" />
+    <result column="file_name" property="fileName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="queryTaskFileList" resultMap="TaskFileListMap" parameterType="java.lang.String">
+    select tf.id,tf.status,ff.real_name file_name
+    from tag_sys_task_file tf
+    inner join tag_sys_ftp_file ff on ff.id = tf.file_id
+    where tf.task_id = #{taskId,jdbcType=VARCHAR}
+  </select>
+</mapper>

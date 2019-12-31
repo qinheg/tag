@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.louddt.tag.mapper.SysAlgoModelMapper" >
+  <resultMap id="BaseResultMap" type="com.louddt.tag.entity.dbo.SysAlgoModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="variable" property="variable" jdbcType="VARCHAR" />
+    <result column="descri" property="descri" jdbcType="VARCHAR" />
+    <result column="file_id" property="fileId" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, code, type, url, variable, descri, file_id, create_time, create_user
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tag_sys_algo_model
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tag_sys_algo_model
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.louddt.tag.entity.dbo.SysAlgoModel" >
+    insert into tag_sys_algo_model (id, name, code,
+      type, url, variable, 
+      descri, file_id, create_time, 
+      create_user)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{variable,jdbcType=VARCHAR}, 
+      #{descri,jdbcType=VARCHAR}, #{fileId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createUser,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.louddt.tag.entity.dbo.SysAlgoModel" >
+    insert into tag_sys_algo_model
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="variable != null" >
+        variable,
+      </if>
+      <if test="descri != null" >
+        descri,
+      </if>
+      <if test="fileId != null" >
+        file_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="variable != null" >
+        #{variable,jdbcType=VARCHAR},
+      </if>
+      <if test="descri != null" >
+        #{descri,jdbcType=VARCHAR},
+      </if>
+      <if test="fileId != null" >
+        #{fileId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.louddt.tag.entity.dbo.SysAlgoModel" >
+    update tag_sys_algo_model
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="variable != null" >
+        variable = #{variable,jdbcType=VARCHAR},
+      </if>
+      <if test="descri != null" >
+        descri = #{descri,jdbcType=VARCHAR},
+      </if>
+      <if test="fileId != null" >
+        file_id = #{fileId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.louddt.tag.entity.dbo.SysAlgoModel" >
+    update tag_sys_algo_model
+    set name = #{name,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      url = #{url,jdbcType=VARCHAR},
+      variable = #{variable,jdbcType=VARCHAR},
+      descri = #{descri,jdbcType=VARCHAR},
+      file_id = #{fileId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_user = #{createUser,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <resultMap id="ModelListMap" type="com.louddt.tag.entity.vo.model.ModelListVo">
+    <result column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="descri" property="descri" jdbcType="VARCHAR" />
+    <result column="file_id" property="fileId" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="queryModelList" resultMap="ModelListMap" parameterType="com.louddt.tag.entity.vo.model.ModelListQuery">
+    select id, name, code, type, descri, file_id
+    from tag_sys_algo_model
+    where  1 = 1
+    <if test="type != null">
+      and type = #{type,jdbcType=INTEGER}
+    </if>
+    <if test="userId != null">
+      and create_user = #{userId,jdbcType=VARCHAR}
+    </if>
+    <if test="pageStart != null">
+      limit #{pageStart,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+    </if>
+  </select>
+
+  <select id="queryModelListTotal" resultType="java.lang.Integer" parameterType="com.louddt.tag.entity.vo.model.ModelListQuery">
+    select count(1)
+    from tag_sys_algo_model
+    where  1 = 1
+    <if test="type != null">
+      and type = #{type,jdbcType=INTEGER}
+    </if>
+    <if test="userId != null">
+      and create_user = #{userId,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+  <delete id="deteleModelsByIds" parameterType="java.lang.Integer">
+    delete from tag_sys_algo_model
+    where id in <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+  </delete>
+</mapper>
